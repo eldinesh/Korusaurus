@@ -1,0 +1,164 @@
+/**
+ * Knowledge Hub design system
+ * ===========================
+ * One set of tokens, two palettes:
+ *   • Light = Apple Developer docs feel — calm, airy, spacious.
+ *   • Dark  = Linear feel — sharp, dense, engineered, one vivid accent + glow.
+ * Everything (cards, sidebar, search, code) inherits from these tokens.
+ */
+
+/* ── Shared tokens ──────────────────────────────────────────────────────── */
+:root {
+  --ifm-font-family-base: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto,
+    Helvetica, Arial, sans-serif;
+  --ifm-font-family-monospace: 'JetBrains Mono', ui-monospace, SFMono-Regular,
+    Menlo, Consolas, monospace;
+
+  --ifm-font-weight-semibold: 600;
+  --ifm-heading-font-weight: 600;
+  --ifm-code-font-size: 90%;
+  --ifm-line-height-base: 1.65;
+  --ifm-container-width-xl: 1180px;
+
+  /* Spacing scale */
+  --kh-space-1: 4px;
+  --kh-space-2: 8px;
+  --kh-space-3: 12px;
+  --kh-space-4: 16px;
+  --kh-space-6: 24px;
+  --kh-space-8: 32px;
+  --kh-space-12: 48px;
+
+  /* Component tokens (overridden per theme below) */
+  --kh-radius: 10px;
+  --kh-radius-sm: 7px;
+}
+
+/* ── Light = Apple-airy ─────────────────────────────────────────────────── */
+:root {
+  --ifm-color-primary: #5b54d6;
+  --ifm-color-primary-dark: #4a43c9;
+  --ifm-color-primary-darker: #443dbe;
+  --ifm-color-primary-darkest: #38329d;
+  --ifm-color-primary-light: #6d67db;
+  --ifm-color-primary-lighter: #7973de;
+  --ifm-color-primary-lightest: #9a96e7;
+
+  --ifm-background-color: #ffffff;
+  --ifm-background-surface-color: #fbfbfd;
+  --ifm-navbar-background-color: rgba(255, 255, 255, 0.8);
+  --ifm-footer-background-color: #1d1d1f;
+
+  --ifm-heading-color: #1d1d1f;
+  --ifm-font-color-base: #1d1d1f;
+  --ifm-font-color-secondary: #6e6e73;
+  --ifm-toc-border-color: #ededf0;
+  --ifm-hr-background-color: #ededf0;
+
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.06);
+
+  /* Knowledge Hub component tokens */
+  --kh-surface: #ffffff;
+  --kh-surface-2: #fbfbfd;
+  --kh-border: #e6e6eb;
+  --kh-border-strong: #d2d2d7;
+  --kh-text-muted: #6e6e73;
+  --kh-card-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --kh-card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --kh-accent: var(--ifm-color-primary);
+  --kh-accent-soft: rgba(91, 84, 214, 0.08);
+  --kh-hero-glow: radial-gradient(
+    60% 60% at 50% 0%,
+    rgba(91, 84, 214, 0.1) 0%,
+    transparent 70%
+  );
+  --kh-chip-bg: #f2f2f5;
+  --kh-chip-text: #424245;
+}
+
+/* ── Dark = Linear-crisp ────────────────────────────────────────────────── */
+[data-theme='dark'] {
+  --ifm-color-primary: #8b90ff;
+  --ifm-color-primary-dark: #6f76ff;
+  --ifm-color-primary-darker: #6169ff;
+  --ifm-color-primary-darkest: #3e47f5;
+  --ifm-color-primary-light: #a7aaff;
+  --ifm-color-primary-lighter: #b5b8ff;
+  --ifm-color-primary-lightest: #d9daff;
+
+  --ifm-background-color: #08090a;
+  --ifm-background-surface-color: #0f1011;
+  --ifm-navbar-background-color: rgba(8, 9, 10, 0.7);
+  --ifm-footer-background-color: #0c0d0e;
+
+  --ifm-heading-color: #f7f8f8;
+  --ifm-font-color-base: #e6e7ea;
+  --ifm-font-color-secondary: #8a8f98;
+  --ifm-toc-border-color: rgba(255, 255, 255, 0.08);
+  --ifm-hr-background-color: rgba(255, 255, 255, 0.08);
+
+  --docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.08);
+
+  --kh-surface: #0f1011;
+  --kh-surface-2: #121315;
+  --kh-border: rgba(255, 255, 255, 0.08);
+  --kh-border-strong: rgba(255, 255, 255, 0.14);
+  --kh-text-muted: #8a8f98;
+  --kh-card-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04);
+  --kh-card-shadow-hover: 0 0 0 1px rgba(139, 144, 255, 0.4),
+    0 8px 30px rgba(99, 105, 255, 0.18);
+  --kh-accent: var(--ifm-color-primary);
+  --kh-accent-soft: rgba(139, 144, 255, 0.12);
+  --kh-hero-glow: radial-gradient(
+    50% 50% at 50% 0%,
+    rgba(99, 105, 255, 0.22) 0%,
+    transparent 70%
+  );
+  --kh-chip-bg: rgba(255, 255, 255, 0.06);
+  --kh-chip-text: #c8cbd2;
+}
+
+/* ── Global polish ──────────────────────────────────────────────────────── */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: -0.02em;
+}
+
+.navbar {
+  backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--kh-border);
+  box-shadow: none;
+}
+
+.markdown > h2 {
+  border-top: 1px solid var(--kh-border);
+  padding-top: var(--kh-space-8);
+  margin-top: var(--kh-space-8);
+}
+
+/* Sidebar: quieter, Linear-style */
+.menu {
+  font-size: 0.92rem;
+}
+.menu__link {
+  border-radius: var(--kh-radius-sm);
+}
+.menu__link--active {
+  background: var(--kh-accent-soft);
+}
+
+/* Inline code + code blocks */
+code {
+  border: 1px solid var(--kh-border);
+  border-radius: 6px;
+  background: var(--kh-surface-2);
+}
+.theme-code-block {
+  border-radius: var(--kh-radius) !important;
+}

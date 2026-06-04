@@ -1,0 +1,10 @@
+{
+  "label": "Prompts",
+  "position": 1,
+  "link": {
+    "type": "generated-index",
+    "slug": "/prompts",
+    "title": "Prompt templates",
+    "description": "Reusable prompts for UX work — research, ideation, content, testing, and more."
+  }
+}

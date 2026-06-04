@@ -1,0 +1,213 @@
+/* Homepage hero + card gallery — scoped CSS module. */
+
+/* ── Hero ───────────────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 6rem 0 3.5rem;
+  text-align: center;
+  border-bottom: 1px solid var(--kh-border);
+}
+.heroGlow {
+  position: absolute;
+  inset: 0;
+  background: var(--kh-hero-glow);
+  pointer-events: none;
+}
+.heroTitle {
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.6rem;
+}
+.heroSubtitle {
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  color: var(--kh-text-muted);
+  max-width: 620px;
+  margin: 0 auto 2rem;
+}
+.heroActions {
+  display: flex;
+  gap: var(--kh-space-3);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.cta {
+  font-weight: 600;
+}
+.ctaGhost {
+  background: transparent;
+  border: 1px solid var(--kh-border-strong);
+  color: var(--ifm-font-color-base);
+}
+
+/* ── Controls ───────────────────────────────────────────────────────────── */
+.gallery {
+  padding: 2.5rem 0 4rem;
+}
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--kh-space-4);
+  margin-bottom: var(--kh-space-6);
+}
+.search {
+  width: 100%;
+  max-width: 420px;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--ifm-font-color-base);
+  background: var(--kh-surface-2);
+  border: 1px solid var(--kh-border);
+  border-radius: var(--kh-radius-sm);
+}
+.search:focus {
+  outline: none;
+  border-color: var(--kh-accent);
+  box-shadow: 0 0 0 3px var(--kh-accent-soft);
+}
+.filterRow,
+.tagRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kh-space-2);
+}
+.filterBtn {
+  padding: 0.4rem 0.85rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  color: var(--ifm-font-color-base);
+  background: var(--kh-surface-2);
+  border: 1px solid var(--kh-border);
+  border-radius: 999px;
+  transition: all 0.15s ease;
+}
+.filterBtn:hover {
+  border-color: var(--kh-border-strong);
+}
+.filterBtnActive {
+  color: #fff;
+  background: var(--kh-accent);
+  border-color: var(--kh-accent);
+}
+.tagBtn {
+  padding: 0.25rem 0.65rem;
+  font-size: 0.8rem;
+  font-family: inherit;
+  cursor: pointer;
+  color: var(--kh-chip-text);
+  background: var(--kh-chip-bg);
+  border: 1px solid transparent;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+.tagBtn:hover {
+  border-color: var(--kh-border-strong);
+}
+.tagBtnActive {
+  color: var(--kh-accent);
+  background: var(--kh-accent-soft);
+  border-color: var(--kh-accent);
+}
+.count {
+  font-size: 0.85rem;
+  color: var(--kh-text-muted);
+  margin-bottom: var(--kh-space-4);
+}
+
+/* ── Grid + cards ───────────────────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--kh-space-4);
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--kh-space-6);
+  background: var(--kh-surface);
+  border: 1px solid var(--kh-border);
+  border-radius: var(--kh-radius);
+  box-shadow: var(--kh-card-shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  color: inherit;
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--kh-card-shadow-hover);
+  text-decoration: none;
+  color: inherit;
+}
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--kh-space-3);
+}
+.badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.5rem;
+  border-radius: 5px;
+  background: var(--kh-chip-bg);
+  color: var(--kh-chip-text);
+}
+.badge_prompts {
+  color: #0a7ea4;
+  background: rgba(10, 126, 164, 0.12);
+}
+.badge_skills {
+  color: #b8860b;
+  background: rgba(184, 134, 11, 0.14);
+}
+.badge_workflows {
+  color: #6e56cf;
+  background: rgba(110, 86, 207, 0.14);
+}
+.figmaDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--kh-accent);
+}
+.cardTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 0.4rem;
+  letter-spacing: -0.01em;
+}
+.cardDesc {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--kh-text-muted);
+  margin: 0 0 var(--kh-space-4);
+  flex: 1;
+}
+.cardTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: auto;
+}
+.chip {
+  font-size: 0.74rem;
+  padding: 0.12rem 0.5rem;
+  border-radius: 5px;
+  background: var(--kh-chip-bg);
+  color: var(--kh-chip-text);
+}
+.cardAuthor {
+  margin-top: var(--kh-space-3);
+  font-size: 0.78rem;
+  color: var(--kh-text-muted);
+}
+.empty {
+  padding: 4rem 0;
+  text-align: center;
+  color: var(--kh-text-muted);
+}

@@ -1,0 +1,10 @@
+{
+  "label": "Skills",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "slug": "/skills",
+    "title": "Claude skills",
+    "description": "Packaged Claude skills the team can install and reuse."
+  }
+}

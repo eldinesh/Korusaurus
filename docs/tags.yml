@@ -1,0 +1,29 @@
+# Controlled tag vocabulary. Entries may ONLY use tags defined here —
+# `onInlineTags: 'throw'` makes an unknown tag fail the build, so filters stay clean.
+# Keep keys lowercase-kebab; add new tags here before using them in an entry.
+
+# ── Model ──
+claude: {label: Claude, permalink: /claude}
+gpt: {label: GPT, permalink: /gpt}
+gemini: {label: Gemini, permalink: /gemini}
+model-agnostic: {label: Model-agnostic, permalink: /model-agnostic}
+
+# ── UX stage ──
+discovery: {label: Discovery, permalink: /discovery}
+research: {label: Research, permalink: /research}
+ideation: {label: Ideation, permalink: /ideation}
+wireframing: {label: Wireframing, permalink: /wireframing}
+content: {label: Content design, permalink: /content-design}
+testing: {label: Usability testing, permalink: /usability-testing}
+handoff: {label: Handoff, permalink: /handoff}
+
+# ── Role ──
+designer: {label: Designer, permalink: /designer}
+researcher: {label: Researcher, permalink: /researcher}
+pm: {label: Product, permalink: /product}
+writer: {label: Writer, permalink: /writer}
+
+# ── Difficulty ──
+beginner: {label: Beginner, permalink: /beginner}
+intermediate: {label: Intermediate, permalink: /intermediate}
+advanced: {label: Advanced, permalink: /advanced}

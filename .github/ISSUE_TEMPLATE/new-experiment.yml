@@ -1,0 +1,100 @@
+name: Share an AI experiment
+description: Add a prompt, Claude skill, or workflow template to the Knowledge Hub. No coding needed.
+title: "[Experiment] "
+labels: ["submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for sharing! Fill this in and submit — a maintainer will review it and it'll
+        appear on the site. You don't need to touch git or Markdown.
+
+  - type: input
+    id: title
+    attributes:
+      label: Title
+      placeholder: e.g. Usability test script generator
+    validations:
+      required: true
+
+  - type: input
+    id: summary
+    attributes:
+      label: One-line summary
+      description: Shown on the card. Keep it to a sentence.
+      placeholder: Turn a feature brief into a moderated usability test script.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - Prompt
+        - Skill
+        - Workflow
+    validations:
+      required: true
+
+  - type: dropdown
+    id: tags
+    attributes:
+      label: Tags
+      description: Pick all that apply — these power the homepage filters.
+      multiple: true
+      options:
+        - claude
+        - gpt
+        - gemini
+        - model-agnostic
+        - discovery
+        - research
+        - ideation
+        - wireframing
+        - content
+        - testing
+        - handoff
+        - designer
+        - researcher
+        - pm
+        - writer
+        - beginner
+        - intermediate
+        - advanced
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: |
+        The actual prompt / skill / steps, plus any notes. Put prompts inside a code block
+        (use the ``` button) so people can copy them cleanly.
+      placeholder: |
+        ## Prompt
+
+        ```text
+        You are a senior UX researcher...
+        ```
+    validations:
+      required: true
+
+  - type: input
+    id: figma_url
+    attributes:
+      label: Figma link (optional)
+      placeholder: https://www.figma.com/file/...
+
+  - type: input
+    id: links
+    attributes:
+      label: Other links (optional)
+      placeholder: Loom, demo, related doc...
+
+  - type: textarea
+    id: attachments
+    attributes:
+      label: Screenshots & files (optional)
+      description: |
+        Drag images or files into this box — GitHub uploads them and you'll see a link appear.
+        These get saved with your entry automatically.

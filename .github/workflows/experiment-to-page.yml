@@ -1,0 +1,59 @@
+name: Experiment to page
+
+# A maintainer reviews a submission and applies the `approved` label → this turns
+# the issue into a Markdown entry, downloads any attachments into static/, and
+# opens a Pull Request. Merging the PR publishes the entry (review-before-publish).
+
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  build-entry:
+    # Only trusted maintainers should be able to apply `approved` — the label is
+    # the publish authority.
+    if: github.event.label.name == 'approved'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - id: parse
+        name: Parse the issue form
+        uses: stefanbuck/github-issue-parser@v3
+        with:
+          template-path: .github/ISSUE_TEMPLATE/new-experiment.yml
+
+      - name: Render entry + localize media
+        env:
+          ISSUE_JSON: ${{ steps.parse.outputs.jsonString }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_USER: ${{ github.event.issue.user.login }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/render-entry.mjs
+
+      - name: Open a Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          # NOTE: the default GITHUB_TOKEN won't trigger the deploy workflow when
+          # the PR is merged. A human merge (push to main) DOES trigger it, which
+          # is fine. To auto-chain, swap in a fine-grained PAT or GitHub App token.
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: experiment/issue-${{ github.event.issue.number }}
+          delete-branch: true
+          base: main
+          commit-message: "content: add experiment from issue #${{ github.event.issue.number }}"
+          title: "New experiment: ${{ github.event.issue.title }}"
+          body: |
+            Generated from #${{ github.event.issue.number }} by @${{ github.event.issue.user.login }}.
+
+            Review the rendered entry, then merge to publish. Closes #${{ github.event.issue.number }}.
+          labels: experiment
