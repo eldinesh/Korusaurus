@@ -19,6 +19,7 @@ type Entry = {
   author: string | null;
 };
 
+const CATEGORY_ORDER = ['prompts', 'skills', 'workflows'];
 const CATEGORY_LABELS: Record<string, string> = {
   prompts: 'Prompts',
   skills: 'Skills',
@@ -29,24 +30,64 @@ function titleCase(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
+/* Monochrome line icons, Linear-style. */
+function CategoryIcon({category}: {category: string}) {
+  const common = {
+    width: 22,
+    height: 22,
+    viewBox: '0 0 24 24',
+    fill: 'none',
+    stroke: 'currentColor',
+    strokeWidth: 1.6,
+    strokeLinecap: 'round' as const,
+    strokeLinejoin: 'round' as const,
+  };
+  if (category === 'prompts') {
+    return (
+      <svg {...common}>
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+      </svg>
+    );
+  }
+  if (category === 'skills') {
+    return (
+      <svg {...common}>
+        <path d="M12 3l1.9 4.8L19 9.5l-4.1 3.3L16 18l-4-2.7L8 18l1.1-5.2L5 9.5l5.1-1.7z" />
+      </svg>
+    );
+  }
+  if (category === 'workflows') {
+    return (
+      <svg {...common}>
+        <rect x="3" y="4" width="6" height="6" rx="1.5" />
+        <rect x="15" y="14" width="6" height="6" rx="1.5" />
+        <path d="M9 7h4a2 2 0 0 1 2 2v8" />
+      </svg>
+    );
+  }
+  return (
+    <svg {...common}>
+      <path d="M4 6h16M4 12h16M4 18h10" />
+    </svg>
+  );
+}
+
 function Hero() {
   const {siteConfig} = useDocusaurusContext();
   return (
     <header className={styles.hero}>
       <div className={styles.heroGlow} aria-hidden />
-      <div className="container">
+      <div className={clsx('container', styles.heroInner)}>
         <Heading as="h1" className={styles.heroTitle}>
           {siteConfig.title}
         </Heading>
         <p className={styles.heroSubtitle}>{siteConfig.tagline}</p>
         <div className={styles.heroActions}>
-          <Link className={clsx('button button--primary button--lg', styles.cta)} to="/docs/prompts">
-            Browse the library
+          <Link className={styles.ctaPrimary} to="/docs/contributing">
+            Share an experiment
           </Link>
-          <Link
-            className={clsx('button button--secondary button--lg', styles.ctaGhost)}
-            to="/docs/contributing">
-            Share an experiment →
+          <Link className={styles.ctaGhost} to="/docs/prompts">
+            Browse the library →
           </Link>
         </div>
       </div>
@@ -57,56 +98,76 @@ function Hero() {
 function Card({entry}: {entry: Entry}) {
   return (
     <Link to={entry.permalink} className={styles.card}>
-      <div className={styles.cardTop}>
-        <span className={clsx(styles.badge, styles[`badge_${entry.category}`])}>
-          {CATEGORY_LABELS[entry.category] ?? titleCase(entry.category)}
-        </span>
-        {entry.figma && <span className={styles.figmaDot} title="Has a Figma link" />}
+      <div className={styles.cardIcon}>
+        <CategoryIcon category={entry.category} />
       </div>
-      <Heading as="h3" className={styles.cardTitle}>
-        {entry.title}
-      </Heading>
-      {entry.description && <p className={styles.cardDesc}>{entry.description}</p>}
-      {entry.tags.length > 0 && (
-        <div className={styles.cardTags}>
-          {entry.tags.slice(0, 4).map((t) => (
-            <span key={t} className={styles.chip}>
-              {t}
-            </span>
-          ))}
-        </div>
-      )}
-      {entry.author && <div className={styles.cardAuthor}>by {entry.author}</div>}
+      <div className={styles.cardBody}>
+        <Heading as="h3" className={styles.cardTitle}>
+          {entry.title}
+        </Heading>
+        {entry.description && <p className={styles.cardDesc}>{entry.description}</p>}
+        {entry.tags.length > 0 && (
+          <div className={styles.cardTags}>
+            {entry.tags.slice(0, 3).map((t) => (
+              <span key={t} className={styles.chip}>
+                {t}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
     </Link>
   );
 }
 
-function Gallery() {
+function Section({label, entries}: {label: string; entries: Entry[]}) {
+  if (!entries.length) return null;
+  return (
+    <section className={styles.section}>
+      <div className={styles.sectionHead}>
+        <Heading as="h2" className={styles.sectionTitle}>
+          {label}
+        </Heading>
+        <span className={styles.sectionCount}>{entries.length}</span>
+      </div>
+      <div className={styles.grid}>
+        {entries.map((e) => (
+          <Card key={e.permalink} entry={e} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Catalog() {
   const data = usePluginData('knowledge-index') as {entries?: Entry[]} | undefined;
   const entries = data?.entries ?? [];
 
-  const [category, setCategory] = useState<string>('all');
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [query, setQuery] = useState('');
 
-  const categories = useMemo(
-    () => Array.from(new Set(entries.map((e) => e.category))).sort(),
-    [entries],
-  );
   const allTags = useMemo(
     () => Array.from(new Set(entries.flatMap((e) => e.tags))).sort(),
     [entries],
   );
+  const categories = useMemo(() => {
+    const present = Array.from(new Set(entries.map((e) => e.category)));
+    return [
+      ...CATEGORY_ORDER.filter((c) => present.includes(c)),
+      ...present.filter((c) => !CATEGORY_ORDER.includes(c)).sort(),
+    ];
+  }, [entries]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return entries.filter((e) => {
-      if (category !== 'all' && e.category !== category) return false;
       if (activeTags.length && !activeTags.every((t) => e.tags.includes(t))) return false;
-      if (q && !(`${e.title} ${e.description}`.toLowerCase().includes(q))) return false;
+      if (q && !`${e.title} ${e.description}`.toLowerCase().includes(q)) return false;
       return true;
     });
-  }, [entries, category, activeTags, query]);
+  }, [entries, activeTags, query]);
+
+  const isFiltering = query.trim().length > 0 || activeTags.length > 0;
 
   const toggleTag = (t: string) =>
     setActiveTags((prev) => (prev.includes(t) ? prev.filter((x) => x !== t) : [...prev, t]));
@@ -114,36 +175,40 @@ function Gallery() {
   if (!entries.length) {
     return (
       <div className={clsx('container', styles.empty)}>
-        <p>No entries yet — be the first to <Link to="/docs/contributing">share an experiment</Link>.</p>
+        <p>
+          No entries yet — be the first to{' '}
+          <Link to="/docs/contributing">share an experiment</Link>.
+        </p>
       </div>
     );
   }
 
   return (
-    <section className={clsx('container', styles.gallery)}>
+    <div className={clsx('container', styles.catalog)}>
       <div className={styles.controls}>
-        <input
-          className={styles.search}
-          type="search"
-          placeholder="Filter by name…"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          aria-label="Filter entries by name"
-        />
-        <div className={styles.filterRow}>
-          <button
-            className={clsx(styles.filterBtn, category === 'all' && styles.filterBtnActive)}
-            onClick={() => setCategory('all')}>
-            All
-          </button>
-          {categories.map((c) => (
-            <button
-              key={c}
-              className={clsx(styles.filterBtn, category === c && styles.filterBtnActive)}
-              onClick={() => setCategory(c)}>
-              {CATEGORY_LABELS[c] ?? titleCase(c)}
-            </button>
-          ))}
+        <div className={styles.searchWrap}>
+          <svg
+            className={styles.searchIcon}
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden>
+            <circle cx="11" cy="11" r="7" />
+            <path d="m21 21-4.3-4.3" />
+          </svg>
+          <input
+            className={styles.search}
+            type="search"
+            placeholder="Search the library…"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            aria-label="Search the library"
+          />
         </div>
         {allTags.length > 0 && (
           <div className={styles.tagRow}>
@@ -159,21 +224,19 @@ function Gallery() {
         )}
       </div>
 
-      <div className={styles.count}>
-        {filtered.length} {filtered.length === 1 ? 'entry' : 'entries'}
-      </div>
-
-      <div className={styles.grid}>
-        {filtered.map((e) => (
-          <Card key={entry_key(e)} entry={e} />
-        ))}
-      </div>
-    </section>
+      {isFiltering ? (
+        <Section label={`${filtered.length} result${filtered.length === 1 ? '' : 's'}`} entries={filtered} />
+      ) : (
+        categories.map((c) => (
+          <Section
+            key={c}
+            label={CATEGORY_LABELS[c] ?? titleCase(c)}
+            entries={filtered.filter((e) => e.category === c)}
+          />
+        ))
+      )}
+    </div>
   );
-}
-
-function entry_key(e: Entry): string {
-  return e.permalink;
 }
 
 export default function Home(): ReactNode {
@@ -182,7 +245,7 @@ export default function Home(): ReactNode {
     <Layout title="Browse" description={siteConfig.tagline}>
       <Hero />
       <main>
-        <Gallery />
+        <Catalog />
       </main>
     </Layout>
   );

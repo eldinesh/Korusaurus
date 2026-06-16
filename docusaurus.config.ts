@@ -106,15 +106,13 @@ const config: Config = {
   themeConfig: {
     image: 'img/docusaurus-social-card.jpg',
     colorMode: {
-      defaultMode: 'light',
+      defaultMode: 'dark',
       respectPrefersColorScheme: true,
     },
     navbar: {
       title: 'Knowledge Hub',
-      logo: {
-        alt: 'Knowledge Hub',
-        src: 'img/logo.svg',
-      },
+      // No logo image — clean wordmark, Linear-style. Drop in a real mark later
+      // by re-adding `logo: { alt, src }`.
       items: [
         {to: '/', label: 'Browse', position: 'left', activeBaseRegex: '^/$'},
         {
