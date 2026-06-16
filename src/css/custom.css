@@ -257,3 +257,23 @@ code {
   border-color: var(--kh-border-hover);
   background: var(--kh-card-bg-hover);
 }
+
+/* Download links (attached files) render as a button anywhere in doc content */
+.markdown a[href*='/resource-files/'] {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  margin: 0.25rem 0;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: #fff !important;
+  background: var(--kh-accent);
+  border: 1px solid var(--kh-accent);
+  border-radius: var(--kh-radius-sm);
+  text-decoration: none !important;
+  transition: filter 0.15s ease;
+}
+.markdown a[href*='/resource-files/']:hover {
+  filter: brightness(1.08);
+}

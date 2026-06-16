@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import {usePluginData} from '@docusaurus/useGlobalData';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 
@@ -19,11 +20,14 @@ type Entry = {
   author: string | null;
 };
 
-const CATEGORY_ORDER = ['prompts', 'skills', 'workflows'];
+const CATEGORY_ORDER = ['prompts', 'skills', 'directives', 'projects', 'workflows', 'other'];
 const CATEGORY_LABELS: Record<string, string> = {
   prompts: 'Prompts',
   skills: 'Skills',
+  directives: 'Directives',
+  projects: 'Projects',
   workflows: 'Workflows',
+  other: 'Other',
 };
 
 function titleCase(s: string): string {
@@ -65,6 +69,21 @@ function CategoryIcon({category}: {category: string}) {
       </svg>
     );
   }
+  if (category === 'directives') {
+    return (
+      <svg {...common}>
+        <path d="M12 3l7 3v5c0 4.4-3 7.4-7 9-4-1.6-7-4.6-7-9V6z" />
+        <path d="m9 11 2 2 4-4" />
+      </svg>
+    );
+  }
+  if (category === 'projects') {
+    return (
+      <svg {...common}>
+        <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+      </svg>
+    );
+  }
   return (
     <svg {...common}>
       <path d="M4 6h16M4 12h16M4 18h10" />
@@ -96,11 +115,16 @@ function Hero() {
 }
 
 function Card({entry}: {entry: Entry}) {
+  const thumb = useBaseUrl(entry.thumbnail ?? '');
   return (
-    <Link to={entry.permalink} className={styles.card}>
-      <div className={styles.cardIcon}>
-        <CategoryIcon category={entry.category} />
-      </div>
+    <Link to={entry.permalink} className={clsx(styles.card, entry.thumbnail && styles.cardHasBanner)}>
+      {entry.thumbnail ? (
+        <div className={styles.cardBanner} style={{backgroundImage: `url(${thumb})`}} />
+      ) : (
+        <div className={styles.cardIcon}>
+          <CategoryIcon category={entry.category} />
+        </div>
+      )}
       <div className={styles.cardBody}>
         <Heading as="h3" className={styles.cardTitle}>
           {entry.title}

@@ -1,46 +1,85 @@
-name: Share an AI experiment
-description: Add a prompt, Claude skill, or workflow template to the Knowledge Hub. No coding needed.
-title: "[Experiment] "
+name: Share an AI resource
+description: Add a Skill, Prompt, Directive, Project, or Workflow to the Knowledge Hub. No coding needed.
+title: "[Resource] "
 labels: ["submission"]
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for sharing! Fill this in and submit — a maintainer will review it and it'll
-        appear on the site. You don't need to touch git or Markdown.
+        Thanks for sharing! Fill this in and submit — a maintainer reviews it and it appears on the site.
+        You don't need to touch git or Markdown.
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type of Resource
+      options:
+        - Skill
+        - Prompt
+        - Directive
+        - Project
+        - Workflow
+        - Other
+    validations:
+      required: true
 
   - type: input
     id: title
     attributes:
       label: Title
-      placeholder: e.g. Usability test script generator
+      description: |
+        Standard nomenclature — clear, descriptive, Title Case. No version numbers or emojis.
+        Format: "<What it does>" or "<Tool> — <purpose>". e.g. "Jira Worklog Skill",
+        "First-Principles Critical Thinking".
+      placeholder: Jira Worklog Skill
     validations:
       required: true
+
+  - type: textarea
+    id: banner
+    attributes:
+      label: Banner / Image (optional)
+      description: Drag in one image to show on the card. Leave blank to use the category icon.
 
   - type: input
     id: summary
     attributes:
       label: One-line summary
       description: Shown on the card. Keep it to a sentence.
-      placeholder: Turn a feature brief into a moderated usability test script.
+      placeholder: Manage Jira worklogs with natural-language prompts.
     validations:
       required: true
 
-  - type: dropdown
-    id: category
+  - type: textarea
+    id: description
     attributes:
-      label: Category
-      options:
-        - Prompt
-        - Skill
-        - Workflow
+      label: Description
+      description: |
+        Paste the actual skill / prompt / directive / project instructions, plus any notes on how to use it.
+        Put prompts and directives inside a code block (the ``` button) so people can copy them cleanly.
+      placeholder: |
+        ## How to use
+        Paste into Settings → Custom Instructions.
+
+        ```text
+        You are a rigorous, first-principles thinker...
+        ```
+    validations:
+      required: true
+
+  - type: input
+    id: made_by
+    attributes:
+      label: Made by
+      description: The person who created it.
+      placeholder: Your name
     validations:
       required: true
 
   - type: dropdown
     id: tags
     attributes:
-      label: Tags
+      label: Tags (optional)
       description: Pick all that apply — these power the homepage filters.
       multiple: true
       options:
@@ -48,6 +87,10 @@ body:
         - gpt
         - gemini
         - model-agnostic
+        - custom-instructions
+        - critical-thinking
+        - productivity
+        - voice-tone
         - discovery
         - research
         - ideation
@@ -62,22 +105,6 @@ body:
         - beginner
         - intermediate
         - advanced
-
-  - type: textarea
-    id: description
-    attributes:
-      label: Description
-      description: |
-        The actual prompt / skill / steps, plus any notes. Put prompts inside a code block
-        (use the ``` button) so people can copy them cleanly.
-      placeholder: |
-        ## Prompt
-
-        ```text
-        You are a senior UX researcher...
-        ```
-    validations:
-      required: true
 
   - type: input
     id: figma_url
@@ -94,7 +121,7 @@ body:
   - type: textarea
     id: attachments
     attributes:
-      label: Screenshots & files (optional)
+      label: File attachments (optional)
       description: |
-        Drag images or files into this box — GitHub uploads them and you'll see a link appear.
-        These get saved with your entry automatically.
+        Drag in one or more files — a skill file (.skill / .zip), a .txt or .md, screenshots, etc.
+        GitHub uploads them and they get saved with your entry as downloads automatically.

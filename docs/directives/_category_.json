@@ -1,0 +1,10 @@
+{
+  "label": "Directives",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "slug": "/directives",
+    "title": "Directives",
+    "description": "Custom instructions and operating directives that shape how the model behaves — paste into Claude or ChatGPT custom instructions to apply them to every conversation."
+  }
+}

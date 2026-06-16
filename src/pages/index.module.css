@@ -221,3 +221,19 @@
   text-align: center;
   color: var(--kh-text-muted);
 }
+
+/* Optional banner/thumbnail at the top of a card */
+.card {
+  overflow: hidden;
+}
+.cardBanner {
+  height: 116px;
+  margin: calc(-1 * var(--kh-space-6)) calc(-1 * var(--kh-space-6)) 0;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--kh-chip-bg);
+  border-bottom: 1px solid var(--kh-border);
+}
+.cardHasBanner .cardBody {
+  margin-top: var(--kh-space-4);
+}

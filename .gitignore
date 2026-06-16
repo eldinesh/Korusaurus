@@ -19,3 +19,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .gstack/
+
+# Raw contributor source material (Slack screenshots with names/photos) — kept
+# local only. Published content lives in docs/ and static/resource-files/.
+/Shared Resources/

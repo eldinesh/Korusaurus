@@ -138,7 +138,8 @@ const config: Config = {
           items: [
             {label: 'Prompts', to: '/docs/prompts'},
             {label: 'Skills', to: '/docs/skills'},
-            {label: 'Workflows', to: '/docs/workflows'},
+            {label: 'Directives', to: '/docs/directives'},
+            {label: 'Projects', to: '/docs/projects'},
           ],
         },
         {

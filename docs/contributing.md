@@ -22,12 +22,15 @@ You'll never touch branches, commits, or code — just a form.
    choose **Share an AI experiment**.
    _(Maintainers: the "Submit an experiment" links in the navbar and footer point straight at this form once you set your org/repo in `docusaurus.config.ts`.)_
 2. Fill in the fields:
-   - **Title** and a one-line **summary**
-   - **Category** — Prompt, Skill, or Workflow
-   - **Tags** — pick from the list (these power the filters on the homepage)
-   - **Description** — your prompt, steps, or skill, plus any notes
-   - **Figma / links** — paste any URLs
-   - **Attachments** — drag in screenshots or files
+   - **Type of Resource** — Skill, Prompt, Directive, Project, Workflow, or Other
+   - **Title** — clear, descriptive, Title Case (e.g. "Jira Worklog Skill")
+   - **Banner / Image** *(optional)* — drag in one image for the card
+   - **One-line summary** — shown on the card
+   - **Description** — paste the skill / prompt / directive / project instructions (use a code block for prompts so they copy cleanly)
+   - **Made by** — the person who created it
+   - **Tags** *(optional)* — pick from the list; these power the homepage filters
+   - **Figma / other links** *(optional)* — paste any URLs
+   - **File attachments** *(optional)* — drag in one or more files (a `.skill`/`.zip`, a `.txt`/`.md`, etc.); they become downloads on your entry
 3. Click **Submit**.
 
 ## What happens next

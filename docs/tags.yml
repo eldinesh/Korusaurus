@@ -23,6 +23,12 @@ researcher: {label: Researcher, permalink: /researcher}
 pm: {label: Product, permalink: /product}
 writer: {label: Writer, permalink: /writer}
 
+# ── Theme ──
+custom-instructions: {label: Custom instructions, permalink: /custom-instructions}
+critical-thinking: {label: Critical thinking, permalink: /critical-thinking}
+productivity: {label: Productivity, permalink: /productivity}
+voice-tone: {label: Voice & tone, permalink: /voice-tone}
+
 # ── Difficulty ──
 beginner: {label: Beginner, permalink: /beginner}
 intermediate: {label: Intermediate, permalink: /intermediate}
